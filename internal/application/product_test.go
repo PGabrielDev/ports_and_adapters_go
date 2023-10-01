@@ -2,6 +2,7 @@ package application_test
 
 import (
 	"github.com/PGabrielDev/ports_and_adapters_go/internal/application"
+	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"
 
 	"testing"
@@ -34,4 +35,28 @@ func TestProduct_Disable(t *testing.T) {
 	err = produto.Disable()
 
 	require.Nil(t, err)
+}
+
+func TestProduct_IsValid(t *testing.T) {
+	product := application.Product{}
+	product.Price = -4
+
+	product.Name = "Lapis"
+	product.ID = uuid.New().String()
+
+	_, err := product.IsValid()
+	require.Equal(t, "preco precisa ser maior que 0", err.Error())
+
+	product.Price = 7
+	product.Status = "Qaualquer coisa"
+
+	_, err = product.IsValid()
+
+	require.Equal(t, "Status precisa ser enable ou disable", err.Error())
+
+	product.Status = application.DISABLE
+	_, err = product.IsValid()
+
+	require.Nil(t, err)
+
 }

@@ -17,6 +17,7 @@ type ProductInterface interface {
 	GetId() string
 	GetStatus() string
 	GetPrice() float64
+	GetName() string
 }
 
 type ProductServiceInterface interface {
@@ -101,6 +102,9 @@ func (p *Product) GetId() string {
 
 func (p *Product) GetStatus() string {
 	return p.Status
+}
+func (p *Product) GetName() string {
+	return p.Name
 }
 
 func (p *Product) GetPrice() float64 {
